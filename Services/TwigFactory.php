@@ -1,9 +1,9 @@
 <?php
 
-namespace Module\ViewModule\Services;
+namespace Alzundaz\View\Services;
 
-use Module\CoreModule\Services\ConfigLoader;
-use Module\CoreModule\Services\CacheHandler;
+use Alzundaz\NitroPHP\Services\ConfigLoader;
+use Alzundaz\NitroPHP\Services\CacheHandler;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 
