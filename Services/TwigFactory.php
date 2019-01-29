@@ -2,14 +2,14 @@
 
 namespace Alzundaz\View\Services;
 
-use Alzundaz\NitroPHP\Services\ConfigLoader;
+use Alzundaz\NitroPHP\Services\ConfigHandler;
 use Alzundaz\NitroPHP\Services\CacheHandler;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 
 class TwigFactory
 {
-    private $configLoader;
+    private $ConfigHandler;
 
     private $CacheHandler;
 
@@ -17,9 +17,9 @@ class TwigFactory
 
     public function __construct()
     {
-        $this->configLoader = ConfigLoader::getInstance();
+        $this->ConfigHandler = ConfigHandler::getInstance();
         $this->CacheHandler = CacheHandler::getInstance();
-        $this->appconf = $this->configLoader->getAppConf();
+        $this->appconf = $this->ConfigHandler->getAppConf();
     }
 
     public static function getTwigFactory()
@@ -32,7 +32,7 @@ class TwigFactory
         $type = $this->CacheHandler->cacheExists('App/twig');
         if( !$type || $this->appconf['dev'] ){
             $loader = new Twig_Loader_Filesystem();
-            foreach($this->configLoader->getModule() as $module){
+            foreach($this->ConfigHandler->getModule() as $module){
                 if($module['enabled']){
                     if(file_exists(ROOT_DIR.'/Module/'.$module['name'].'/View/')){
                         $loader->addPath(ROOT_DIR.'/Module/'.$module['name'].'/View', $module['name']);
