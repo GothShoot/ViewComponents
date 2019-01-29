@@ -14,5 +14,10 @@
         "php": "^7.1",
         "twig/twig": "^2.4",
         "alzundaz/nitrophp": "*"
+    },
+    "autoload": {
+        "psr-4" : {
+            "Alzundaz\\View\\" : ""
+        }
     }
 }
