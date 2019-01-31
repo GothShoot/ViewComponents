@@ -31,6 +31,7 @@ class TwigFactory
     {
         $type = $this->CacheHandler->cacheExists('App/twig');
         if( !$type || $this->appconf['dev'] ){
+            if( !file_exists( WEBROOT_DIR.'/assets' ) ) mkdir(WEBROOT_DIR.'/assets', 0775);
             $loader = new Twig_Loader_Filesystem();
             foreach($this->ConfigHandler->getModule() as $module){
                 if($module['enabled']){
