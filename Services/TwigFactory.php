@@ -6,6 +6,9 @@ use Alzundaz\NitroPHP\Services\ConfigHandler;
 use Alzundaz\NitroPHP\Services\CacheHandler;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
+use Twig_Profiler_Profile;
+use Twig_Extension_Profiler;
+use \Odan\Twig\TwigAssetsExtension;
 
 class TwigFactory
 {
@@ -52,7 +55,7 @@ class TwigFactory
             // Profiler::getInstance()->setTwigProfil($profile);
             // $dumper = new Twig_Profiler_Dumper_Html();
         }
-        $twig->addExtension( new \Odan\Twig\TwigAssetsExtension( $twig, $this->configureAssets() ) );
+        $twig->addExtension( new TwigAssetsExtension( $twig, $this->configureAssets() ) );
 
         return $twig;
     }
