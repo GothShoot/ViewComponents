@@ -29,34 +29,35 @@ class TwigFactory
 
     public function getTwig()
     {
-        $type = $this->CacheHandler->cacheExists('App/twig');
-        if( !$type || $this->appconf['dev'] ){
-            if( !file_exists( WEBROOT_DIR.'/assets' ) ) mkdir(WEBROOT_DIR.'/assets', 0775);
-            $loader = new Twig_Loader_Filesystem();
-            foreach($this->ConfigHandler->getModule() as $module){
-                if($module['enabled']){
-                    if( file_exists( ROOT_DIR.'/Module/'.$module['name'].'/View/' ) ){
-                        $loader->addPath(ROOT_DIR.'/Module/'.$module['name'].'/View', $module['name']);
-                    }
+        if( !file_exists( WEBROOT_DIR.'/assets' ) ) mkdir(WEBROOT_DIR.'/assets', 0775);
+
+        $loader = new Twig_Loader_Filesystem();
+
+        foreach($this->ConfigHandler->getModule() as $module){
+            if($module['enabled']){
+                if( file_exists( ROOT_DIR.'/Module/'.$module['name'].'/View/' ) ){
+                    $loader->addPath(ROOT_DIR.'/Module/'.$module['name'].'/View', $module['name']);
                 }
             }
-            $twig = new Twig_Environment($loader, array(
-                'cache' => ($this->appconf['cachemode'] ? ROOT_DIR.'/Var/Cache/View' : false),
-                'auto_reload' => ($this->appconf['dev'])
-            ));
-            // $twig->addExtension(new Twig_Extension_Core());
-            // $twig->addExtension(new Twig_Extension_Escaper('html'));
-            // if($this->appconf['dev']){
-            //     $profile = new Twig_Profiler_Profile();
-            //     $twig->addExtension(new Twig_Extension_Profiler($profile));
-            //     $dumper = new Twig_Profiler_Dumper_Text();
-            // } else {
-            //     $twig->addExtension(new Twig_Extension_Optimizer());
-            // }
-            $twig->addExtension( new \Odan\Twig\TwigAssetsExtension( $twig, $this->configureAssets() ) );
-            $type = $this->CacheHandler->setCache('App/twig', $twig);
         }
-        return $this->CacheHandler->getCache('App/twig', $type);
+
+        $twig = new Twig_Environment($loader, array(
+            'cache' => ($this->appconf['cachemode'] ? ROOT_DIR.'/Var/Cache/View' : false),
+            'auto_reload' => ($this->appconf['dev'])
+        ));
+
+        // $twig->addExtension(new Twig_Extension_Core());
+        // $twig->addExtension(new Twig_Extension_Escaper('html'));
+        // if($this->appconf['dev']){
+        //     $profile = new Twig_Profiler_Profile();
+        //     $twig->addExtension(new Twig_Extension_Profiler($profile));
+        //     $dumper = new Twig_Profiler_Dumper_Text();
+        // } else {
+        //     $twig->addExtension(new Twig_Extension_Optimizer());
+        // }
+        $twig->addExtension( new \Odan\Twig\TwigAssetsExtension( $twig, $this->configureAssets() ) );
+        
+        return $twig;
     }
 
     private function configureAssets():array
