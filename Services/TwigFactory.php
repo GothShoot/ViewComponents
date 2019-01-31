@@ -46,14 +46,11 @@ class TwigFactory
             'auto_reload' => ($this->appconf['dev'])
         ));
 
-        $twig->addExtension(new Twig_Extension_Core());
-        $twig->addExtension(new Twig_Extension_Escaper('html'));
         if($this->appconf['dev']){
             $profile = new Twig_Profiler_Profile();
             $twig->addExtension(new Twig_Extension_Profiler($profile));
-            $dumper = new Twig_Profiler_Dumper_Text();
-        } else {
-            $twig->addExtension(new Twig_Extension_Optimizer());
+            // Profiler::getInstance()->setTwigProfil($profile);
+            // $dumper = new Twig_Profiler_Dumper_Html();
         }
         $twig->addExtension( new \Odan\Twig\TwigAssetsExtension( $twig, $this->configureAssets() ) );
 
