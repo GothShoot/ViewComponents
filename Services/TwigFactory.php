@@ -34,7 +34,7 @@ class TwigFactory
             $loader = new Twig_Loader_Filesystem();
             foreach($this->ConfigHandler->getModule() as $module){
                 if($module['enabled']){
-                    if(file_exists(ROOT_DIR.'/Module/'.$module['name'].'/View/')){
+                    if( file_exists( ROOT_DIR.'/Module/'.$module['name'].'/View/' ) ){
                         $loader->addPath(ROOT_DIR.'/Module/'.$module['name'].'/View', $module['name']);
                     }
                 }
@@ -52,13 +52,13 @@ class TwigFactory
             // } else {
             //     $twig->addExtension(new Twig_Extension_Optimizer());
             // }
-            $twig->addExtension(new \Odan\Twig\TwigAssetsExtension($twig, $options));
+            $twig->addExtension( new \Odan\Twig\TwigAssetsExtension( $twig, $this->configureAssets() ) );
             $type = $this->CacheHandler->setCache('App/twig', $twig);
         }
         return $this->CacheHandler->getCache('App/twig', $type);
     }
 
-    private function configureAssets()
+    private function configureAssets():array
     {
         return $options = [
             // Public assets cache directory
