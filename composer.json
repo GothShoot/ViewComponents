@@ -13,6 +13,7 @@
     "require": {
         "php": "^7.1",
         "twig/twig": "^2.4",
+        "odan/twig-assets": "^2.0",
         "alzundaz/nitrophp": "*"
     },
     "autoload": {

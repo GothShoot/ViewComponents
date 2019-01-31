@@ -52,8 +52,43 @@ class TwigFactory
             // } else {
             //     $twig->addExtension(new Twig_Extension_Optimizer());
             // }
+            $twig->addExtension(new \Odan\Twig\TwigAssetsExtension($twig, $options));
             $type = $this->CacheHandler->setCache('App/twig', $twig);
         }
         return $this->CacheHandler->getCache('App/twig', $type);
+    }
+
+    private function configureAssets()
+    {
+        return $options = [
+            // Public assets cache directory
+            'path' => WEBROOT_DIR.'/assets',
+            
+            // Public cache directory permissions (octal)
+            // You need to prefix mode with a zero (0)
+            // Use -1 to disable chmod
+            'path_chmod' => 0750,
+            
+            // The public url base path
+            'url_base_path' => 'assets/',
+            
+            // Internal cache settings
+            //
+            // The main cache directory
+            // Use '' (empty string) to disable the internal cache
+            'cache_path' => ROOT_DIR.'/Var/Assets',
+            
+            // Used as the subdirectory of the cache_path directory, 
+            // where cache items will be stored
+            'cache_name' => 'assets-cache',
+            
+            // The lifetime (in seconds) for cache items
+            // With a value 0 causing items to be stored indefinitely
+            'cache_lifetime' => 0,
+            
+            // Enable JavaScript and CSS compression
+            // 1 = on, 0 = off
+            'minify' => 1
+        ];
     }
 }
